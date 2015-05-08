@@ -215,7 +215,7 @@ describe('Server', function() {
           .post('/posts')
           .send({body: 'foo', booleanValue: 'true', integerValue: '1'})
           .expect('Content-Type', /json/)
-          .expect({id: 3, body: 'foo', booleanValue: true, integerValue: 1})
+          .expect({body: 'foo', booleanValue: true, integerValue: 1, id: 3})
           .expect(200)
           .end(function(err, res) {
             if (err) return done(err)

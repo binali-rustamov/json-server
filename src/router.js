@@ -160,11 +160,13 @@ module.exports = function(source, args) {
     for (var key in req.body) {
       req.body[key] = utils.toNative(req.body[key])
     }
-
     var resource = db(req.params.resource)
-      .insert(req.body)
-
-    res.jsonp(resource)
+    var maxId = Math.max.apply(Math, resource.map(function(o) {
+      return o.id
+    }))
+    req.body.id = maxId + 1
+    resource.insert(req.body)
+    res.jsonp(resource.last())
   }
 
   // PUT /:resource/:id
